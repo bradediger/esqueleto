@@ -1334,6 +1334,16 @@ main = do
           let [Value a, Value b] = ret
           liftIO $ max (abs (a - 6.8)) (abs (b - 7.7)) `shouldSatisfy` (< 0.01)
 
+      it "asInt generates an explicit cast" $
+        run $ do
+          _ <- insert (Numbers 30 2.4)
+          ret <- select $
+            from $ \n -> return $
+                         -- The asInt should truncate: 30 * 2 == 60
+                         asInt (n ^. NumbersDouble) *. n ^. NumbersInt
+          let [Value v] = ret
+          liftIO $ v `shouldBe` 60
+
     describe "case" $ do
       it "Works for a simple value based when - False" $
         run $ do

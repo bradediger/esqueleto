@@ -516,6 +516,11 @@ instance Esqueleto SqlQuery SqlExpr SqlBackend where
   castNum  = veryUnsafeCoerceSqlExprValue
   castNumM = veryUnsafeCoerceSqlExprValue
 
+  asInt expr =
+    ERaw Never $ \info ->
+      let (argsTLB, argsVals) = uncommas' $ map (\(ERaw _ f) -> f info) $ toArgList expr
+      in ("CAST" <> parens (argsTLB <> " AS INTEGER"), argsVals)
+
   coalesce              = unsafeSqlFunctionParens "COALESCE"
   coalesceDefault exprs = unsafeSqlFunctionParens "COALESCE" . (exprs ++) . return . just
 
