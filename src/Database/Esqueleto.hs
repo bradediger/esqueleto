@@ -46,7 +46,7 @@ module Database.Esqueleto
              , not_, (==.), (>=.), (>.), (<=.), (<.), (!=.), (&&.), (||.)
              , (+.), (-.), (/.), (*.)
              , random_, round_, ceiling_, floor_
-             , min_, max_, sum_, avg_, castNum, castNumM
+             , min_, max_, sum_, avg_, castNum, castNumM, asInt
              , coalesce, coalesceDefault
              , lower_, like, ilike, (%), concat_, (++.), castString
              , subList_select, subList_selectDistinct, valList, justList

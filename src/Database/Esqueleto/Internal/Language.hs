@@ -385,6 +385,10 @@ class (Functor query, Applicative query, Monad query) =>
   -- /Since: 2.2.9/
   castNumM :: (Num a, Num b) => expr (Value (Maybe a)) -> expr (Value (Maybe b))
 
+  -- | Explicit cast to integer.
+  asInt :: Num a => expr (Value a) -> expr (Value Int)
+
+
   -- | @COALESCE@ function. Evaluates the arguments in order and
   -- returns the value of the first non-NULL expression, or NULL
   -- (Nothing) otherwise. Some RDBMSs (such as SQLite) require
