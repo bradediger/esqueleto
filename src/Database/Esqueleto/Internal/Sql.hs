@@ -35,6 +35,7 @@ module Database.Esqueleto.Internal.Sql
   , unsafeSqlValue
   , unsafeSqlFunction
   , unsafeSqlExtractSubField
+  , unsafeExplicitCast
   , UnsafeSqlFunctionArgument
   , rawSelectSource
   , runSource
@@ -476,10 +477,9 @@ instance Esqueleto SqlQuery SqlExpr SqlBackend where
   castNum  = veryUnsafeCoerceSqlExprValue
   castNumM = veryUnsafeCoerceSqlExprValue
 
-  asInt expr =
-    ERaw Never $ \info ->
-      let (argsTLB, argsVals) = uncommas' $ map (\(ERaw _ f) -> f info) $ toArgList expr
-      in ("CAST" <> parens (argsTLB <> " AS INTEGER"), argsVals)
+  asInt = unsafeExplicitCast "INTEGER"
+  asDouble = unsafeExplicitCast "DOUBLE PRECISION"
+  asNumeric = unsafeExplicitCast "NUMERIC"
 
   coalesce              = unsafeSqlFunctionParens "COALESCE"
   coalesceDefault exprs = unsafeSqlFunctionParens "COALESCE" . (exprs ++) . return . just
@@ -729,6 +729,11 @@ instance ( UnsafeSqlFunctionArgument a
   toArgList = toArgList . from4
 
 
+unsafeExplicitCast :: TLB.Builder -> SqlExpr (Value a) -> SqlExpr (Value b)
+unsafeExplicitCast typeName expr =
+    ERaw Never $ \info ->
+      let (argsTLB, argsVals) = uncommas' $ map (\(ERaw _ f) -> f info) $ toArgList expr
+      in ("CAST" <> parens (argsTLB <> " AS " <> typeName), argsVals)
 
 -- | (Internal) Coerce a value's type from 'SqlExpr (Value a)' to
 -- 'SqlExpr (Value b)'.  You should /not/ use this function

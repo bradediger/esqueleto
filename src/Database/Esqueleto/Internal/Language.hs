@@ -388,6 +388,11 @@ class (Functor query, Applicative query, Monad query) =>
   -- | Explicit cast to integer.
   asInt :: Num a => expr (Value a) -> expr (Value Int)
 
+  -- | Explicit cast to double.
+  asDouble :: Num a => expr (Value a) -> expr (Value Double)
+
+  -- | Explicit cast to numeric.
+  asNumeric :: (Num a, Num b) => expr (Value a) -> expr (Value b)
 
   -- | @COALESCE@ function. Evaluates the arguments in order and
   -- returns the value of the first non-NULL expression, or NULL
