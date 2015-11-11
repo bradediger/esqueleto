@@ -1344,6 +1344,20 @@ main = do
           let [Value v] = ret
           liftIO $ v `shouldBe` 60
 
+      it "asNumeric generates an explicit cast" $
+        run $ do
+          -- 2-argument form of round(numeric, integer).
+          let roundWithPrecision :: (Num a, Num b) =>
+                       SqlExpr (Value a) -> SqlExpr (Value Int) -> SqlExpr (Value b)
+              roundWithPrecision = curry $ EI.unsafeSqlFunction "ROUND"
+          ret <- select $ do
+            let d :: SqlExpr (Value Double)
+                d = asDouble (val 2.12345 :: SqlExpr (Value Double))
+                n :: SqlExpr (Value Double)
+                n = asNumeric d
+            return $ roundWithPrecision n (val 2)
+          liftIO $ ret `shouldBe` [Value (2.12 :: Double)]
+
     describe "case" $ do
       it "Works for a simple value based when - False" $
         run $ do
