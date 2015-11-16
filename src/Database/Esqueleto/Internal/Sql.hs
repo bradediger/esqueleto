@@ -520,6 +520,7 @@ instance Esqueleto SqlQuery SqlExpr SqlBackend where
   asInt = unsafeExplicitCast "INTEGER"
   asDouble = unsafeExplicitCast "DOUBLE PRECISION"
   asNumeric = unsafeExplicitCast "NUMERIC"
+  asText = unsafeExplicitCast "TEXT"
 
   coalesce              = unsafeSqlFunctionParens "COALESCE"
   coalesceDefault exprs = unsafeSqlFunctionParens "COALESCE" . (exprs ++) . return . just
