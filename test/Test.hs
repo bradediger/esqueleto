@@ -1266,6 +1266,12 @@ main = do
             return $ roundWithPrecision n (val 2)
           liftIO $ ret `shouldBe` [Value (2.12 :: Double)]
 
+      it "asText generates an explicit cast" $
+        run $ do
+          ret <- select $ do
+            return $ asText (val (1 :: Int)) ++. val "," ++. asText (val (2 :: Int))
+          liftIO $ ret `shouldBe` [Value "1,2"]
+
     describe "case" $ do
       it "Works for a simple value based when - False" $
         run $ do

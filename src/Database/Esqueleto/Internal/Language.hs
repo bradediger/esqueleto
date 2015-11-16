@@ -394,6 +394,9 @@ class (Functor query, Applicative query, Monad query) =>
   -- | Explicit cast to numeric.
   asNumeric :: (Num a, Num b) => expr (Value a) -> expr (Value b)
 
+  -- | Explicit cast to text.
+  asText :: expr (Value a) -> expr (Value T.Text)
+
   -- | @COALESCE@ function. Evaluates the arguments in order and
   -- returns the value of the first non-NULL expression, or NULL
   -- (Nothing) otherwise. Some RDBMSs (such as SQLite) require
