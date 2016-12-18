@@ -1,1 +1,5 @@
-stack-8.0.yaml
+resolver: lts-7.13
+extra-deps:
+- persistent-2.2.4.1
+- persistent-sqlite-2.2.1
+- persistent-template-2.1.8.1
