@@ -63,7 +63,6 @@ library:
     - Database.Esqueleto
     - Database.Esqueleto.Internal.Language
     - Database.Esqueleto.Internal.Sql
-    - Database.Esqueleto.MySQL
     - Database.Esqueleto.PostgreSQL
     - Database.Esqueleto.SQLite
   when:
@@ -76,22 +75,6 @@ library:
       ghc-options: -Wall
 
 tests:
-  mysql:
-    main: 'MySQL/Test.hs'
-    source-dirs: test
-    ghc-options: -Wall
-    dependencies:
-      - containers
-      - esqueleto
-      - hspec
-      - mysql-simple
-      - mysql
-      - persistent-mysql
-      - persistent-template
-    other-modules:
-      - Common.Test
-      - Paths_esqueleto
-
   sqlite:
     main: SQLite/Test.hs
     source-dirs: test
