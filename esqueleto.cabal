@@ -1,8 +1,8 @@
--- This file has been generated from package.yaml by hpack version 0.20.0.
+-- This file has been generated from package.yaml by hpack version 0.27.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 34b1b8836c9ae7acb038d0e808674ddb4c2ab696d37e5b117f61acad02ed6daf
+-- hash: 9022124bdb10ddd4df35999e103202479635b91e6237d6c6205f83227a240391
 
 name:           esqueleto
 version:        2.6.0
